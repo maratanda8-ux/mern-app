@@ -16,4 +16,3 @@ app.listen(PORT, () => {
 });
 
 
-// mongodb+srv://vivasvaan8_db_user:HA9Hf5K8czdCbsw0@cluster0.pu4ouaa.mongodb.net/?appName=Cluster0
