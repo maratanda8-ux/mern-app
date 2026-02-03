@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Dark Mode (Default) */
+  --theme-text: #e2e8f0;
+  --theme-text-dim: #94a3b8;
+  --theme-bg: #09090b;
+  --theme-surface: #18181b;
+  --theme-border: #27272a;
+  color-scheme: dark;
+}
+
+:root.light {
+  /* Light Mode */
+  --theme-text: #1e293b;
+  --theme-text-dim: #64748b;
+  --theme-bg: #f8fafc;
+  --theme-surface: #ffffff;
+  --theme-border: #e2e8f0;
+  color-scheme: light;
+}
+
+@theme {
+  --color-theme-text: var(--theme-text);
+  --color-theme-text-dim: var(--theme-text-dim);
+  --color-theme-bg: var(--theme-bg);
+  --color-theme-surface: var(--theme-surface);
+  --color-theme-border: var(--theme-border);
+  
+  --font-sans: "Share Tech Mono", monospace;
+  --shadow-theme: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body {
+  @apply bg-theme-bg text-theme-text font-sans transition-colors duration-300;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--theme-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--theme-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--theme-text-dim);
+}

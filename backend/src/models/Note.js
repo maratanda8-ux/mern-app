@@ -4,6 +4,11 @@ import mongoose from "mongoose";
 // Model Based on the schema
 
 const noteSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
     title: {
         type: String,
         required: true,
@@ -19,3 +24,4 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model("Note", noteSchema);
 
 export default Note;
+
