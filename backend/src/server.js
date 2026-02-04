@@ -20,10 +20,12 @@ app.use(express.urlencoded({ extended: true })); // to parse form data
 app.use(cookieParser());
 app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve static files
 
-app.use(cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"], // Frontend URL
-    credentials: true
-}));
+if (process.env.NODE_ENV !== "production") {
+    app.use(cors({
+        origin: ["http://localhost:5173", "http://localhost:5174"], // Frontend URL
+        credentials: true
+    }));
+}
 
 app.use("/api/auth", authRoutes);
 app.use("/api/notes", notesRoutes);

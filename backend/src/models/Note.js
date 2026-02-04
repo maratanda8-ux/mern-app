@@ -16,6 +16,10 @@ const noteSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true,
+    },
+    isStarred: {
+        type: Boolean,
+        default: false,
     }
 },
     {timestamps: true} // createdAt and updateAt fields

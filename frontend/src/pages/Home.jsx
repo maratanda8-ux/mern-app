@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import NoteCard from "../components/NoteCard";
 import Navbar from "../components/Navbar";
 import { toast } from "react-hot-toast";
@@ -10,11 +11,14 @@ const Home = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentNote, setCurrentNote] = useState({ title: "", content: "" });
     const [isEditing, setIsEditing] = useState(false);
+    const [searchParams] = useSearchParams();
+
+    const showStarredOnly = searchParams.get("type") === "starred";
 
     const fetchNotes = async () => {
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:5001/api/notes", {
+            const res = await fetch("/api/notes", {
                 credentials: "include"
             });
             const data = await res.json();
@@ -37,19 +41,19 @@ const Home = () => {
     const handleDelete = async (id) => {
         if (!window.confirm("Confirm deletion of note?")) return;
         try {
-            const res = await fetch(`http://localhost:5001/api/notes/${id}`, {
+            const res = await fetch(`/api/notes/${id}`, {
                 method: "DELETE",
                 credentials: "include"
             });
             const data = await res.json();
             if (res.ok) {
                 setNotes(notes.filter((note) => note._id !== id));
-                toast.success("Data unit purged");
+                toast.success("Note deleted successfully");
             } else {
                 toast.error(data.error);
             }
         } catch (error) {
-            toast.error("Error purging data");
+            toast.error("Error deleting note");
         }
     };
 
@@ -57,8 +61,8 @@ const Home = () => {
         e.preventDefault();
         try {
             const url = isEditing
-                ? `http://localhost:5001/api/notes/${currentNote._id}`
-                : "http://localhost:5001/api/notes";
+                ? `/api/notes/${currentNote._id}`
+                : "/api/notes";
             const method = isEditing ? "PUT" : "POST";
 
             const res = await fetch(url, {
@@ -83,6 +87,24 @@ const Home = () => {
         }
     };
 
+    const handleStarNote = async (note) => {
+        try {
+            const res = await fetch(`/api/notes/${note._id}/star`, {
+                method: "PUT",
+                credentials: "include"
+            });
+            const updatedNote = await res.json();
+            if (res.ok) {
+                setNotes(prevNotes => prevNotes.map(n => n._id === note._id ? updatedNote : n));
+                toast.success(updatedNote.isStarred ? "Note starred" : "Note unstarred");
+            } else {
+                toast.error(updatedNote.error);
+            }
+        } catch (error) {
+            toast.error("Failed to update star status");
+        }
+    };
+
     const openModal = (note = null) => {
         if (note) {
             setIsEditing(true);
@@ -94,6 +116,9 @@ const Home = () => {
         setIsModalOpen(true);
     };
 
+    // Filter notes based on the query parameter
+    const filteredNotes = showStarredOnly ? notes.filter(note => note.isStarred) : notes;
+
     return (
         <div className="min-h-screen bg-theme-bg p-6 pt-24 relative overflow-hidden">
             
@@ -102,7 +127,7 @@ const Home = () => {
             {/* Main Content */}
             <div className="relative z-10 max-w-7xl mx-auto">
                 <div className="flex justify-between items-center mb-8">
-                    <h2 className="text-2xl text-theme-text font-semibold">Your Notes</h2>
+                    <h2 className="text-2xl text-theme-text font-semibold">{showStarredOnly ? "Starred Notes" : "Your Notes"}</h2>
                     <button onClick={() => openModal()} className="px-6 py-2 rounded-md bg-theme-text text-theme-bg font-semibold hover:opacity-90 transition-opacity shadow-sm flex items-center gap-2">
                         <MdAdd size={20} /> Create Notes
                     </button>
@@ -114,13 +139,15 @@ const Home = () => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {notes.length > 0 ? (
-                            notes.map((note) => (
-                                <NoteCard key={note._id} note={note} onDelete={handleDelete} onEdit={openModal} />
+                        {filteredNotes.length > 0 ? (
+                            [...filteredNotes].sort((a, b) => Number(b.isStarred) - Number(a.isStarred)).map((note) => (
+                                <NoteCard key={note._id} note={note} onDelete={handleDelete} onEdit={openModal} onStar={handleStarNote} />
                             ))
                         ) : (
                             <div className="col-span-full text-center py-20 border border-dashed border-theme-border rounded-lg bg-theme-surface/50">
-                                <p className="text-theme-text-dim">No notes found. Create one to get started.</p>
+                                <p className="text-theme-text-dim">
+                                    {showStarredOnly ? "No starred notes found." : "No notes found. Create one to get started."}
+                                </p>
                             </div>
                         )}
                     </div>

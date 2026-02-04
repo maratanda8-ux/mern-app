@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { useThemeContext } from "../context/ThemeContext";
 import useLogout from "../hooks/useLogout";
-import { MdDarkMode, MdLightMode, MdSettings, MdLogout, MdMenu, MdClose } from "react-icons/md";
+import { MdDarkMode, MdLightMode, MdSettings, MdLogout, MdMenu, MdClose, MdStar } from "react-icons/md";
 import ProfileModal from "./ProfileModal";
 import { Link } from "react-router-dom";
 
@@ -76,6 +76,14 @@ const Navbar = () => {
                                             <p className="text-xs text-theme-text-dim truncate">{authUser.email}</p>
                                         </div>
                                         
+                                        <Link 
+                                            to="/?type=starred"
+                                            onClick={() => setIsDropdownOpen(false)}
+                                            className="w-full text-left px-4 py-2 text-sm text-theme-text hover:bg-theme-bg flex items-center gap-2"
+                                        >
+                                            <MdStar size={16} className="text-yellow-400" /> Starred Notes
+                                        </Link>
+
                                         <button 
                                             onClick={() => { setIsProfileModalOpen(true); setIsDropdownOpen(false); }}
                                             className="w-full text-left px-4 py-2 text-sm text-theme-text hover:bg-theme-bg flex items-center gap-2"
@@ -133,6 +141,13 @@ const Navbar = () => {
                                         <p className="text-xs text-theme-text-dim truncate">{authUser.email}</p>
                                      </div>
                                 </div>
+                                <Link 
+                                    to="/?type=starred"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="w-full text-left px-4 py-3 text-theme-text hover:bg-theme-surface rounded-md flex items-center gap-3 transition-colors"
+                                >
+                                    <MdStar size={20} className="text-yellow-400" /> Starred Notes
+                                </Link>
                                 <button 
                                     onClick={() => { setIsProfileModalOpen(true); setIsMobileMenuOpen(false); }}
                                     className="w-full text-left px-4 py-3 text-theme-text hover:bg-theme-surface rounded-md flex items-center gap-3 transition-colors"

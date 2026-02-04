@@ -26,7 +26,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
         formData.append("profilePic", file);
 
         try {
-            const res = await fetch("http://localhost:5001/api/auth/profile", {
+            const res = await fetch("/api/auth/profile", {
                 method: "PUT",
                 body: formData,
                 credentials: "include"
