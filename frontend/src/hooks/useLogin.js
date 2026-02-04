@@ -24,9 +24,9 @@ const useLogin = () => {
                 throw new Error(data.error);
             }
 
-            localStorage.setItem("thinkboard-user", JSON.stringify(data));
+            localStorage.setItem("notary-user", JSON.stringify(data));
             setAuthUser(data);
-            toast.success("Access Granted: Unit " + data.username);
+            toast.success("Access Granted: User-Name " + data.username);
 
         } catch (error) {
             toast.error(error.message);

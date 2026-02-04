@@ -8,7 +8,7 @@ export const useAuthContext = () => {
 };
 
 export const AuthContextProvider = ({ children }) => {
-    const [authUser, setAuthUser] = useState(JSON.parse(localStorage.getItem("thinkboard-user")) || null);
+    const [authUser, setAuthUser] = useState(JSON.parse(localStorage.getItem("notary-user")) || null);
     const [loading, setLoading] = useState(false);
 
     return (

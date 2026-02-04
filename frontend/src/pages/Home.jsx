@@ -95,7 +95,7 @@ const Home = () => {
     };
 
     return (
-        <div className="min-h-screen bg-theme-bg p-6 relative overflow-hidden">
+        <div className="min-h-screen bg-theme-bg p-6 pt-24 relative overflow-hidden">
             
             <Navbar />
 

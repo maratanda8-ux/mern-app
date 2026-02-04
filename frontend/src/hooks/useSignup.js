@@ -24,7 +24,7 @@ const useSignup = () => {
                 throw new Error(data.error);
             }
 
-            localStorage.setItem("thinkboard-user", JSON.stringify(data));
+            localStorage.setItem("notary-user", JSON.stringify(data));
             setAuthUser(data);
             toast.success("Welcome, Unit " + data.username);
 

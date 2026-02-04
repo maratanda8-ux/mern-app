@@ -1,20 +1,14 @@
 import { Link } from "react-router-dom";
 import { MdSecurity, MdSpeed, MdCloudQueue, MdLightMode, MdDarkMode } from "react-icons/md";
 import { useThemeContext } from "../context/ThemeContext";
+import Navbar from "../components/Navbar";
 
 const Landing = () => {
     const { theme, toggleTheme } = useThemeContext();
 
     return (
-        <div className="min-h-screen bg-theme-bg flex flex-col items-center justify-center relative overflow-hidden p-6 text-center">
-            {/* Theme Toggle */}
-            <button 
-                onClick={toggleTheme} 
-                className="absolute top-6 right-6 p-2 rounded-full hover:bg-theme-text/10 text-theme-text transition-colors z-50"
-                title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            >
-                {theme === "dark" ? <MdLightMode size={32} /> : <MdDarkMode size={32} />}
-            </button>
+        <div className="min-h-screen bg-theme-bg flex flex-col items-center justify-center relative overflow-hidden p-6 pt-24 text-center">
+            <Navbar />
 
             {/* Background Decorations */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none opacity-20">

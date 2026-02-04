@@ -6,7 +6,7 @@ import { MdClose, MdCloudUpload } from "react-icons/md";
 const ProfileModal = ({ isOpen, onClose }) => {
     const { authUser, setAuthUser } = useAuthContext();
     const [file, setFile] = useState(null);
-    const [preview, setPreview] = useState(authUser.profilePic || "");
+    const [preview, setPreview] = useState(authUser?.profilePic || "");
     const [loading, setLoading] = useState(false);
 
     const handleFileChange = (e) => {
@@ -34,7 +34,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
             const data = await res.json();
             if (res.ok) {
                 setAuthUser(data);
-                localStorage.setItem("thinkboard-user", JSON.stringify(data));
+                localStorage.setItem("notary-user", JSON.stringify(data));
                 toast.success("Profile updated successfully");
                 onClose();
             } else {
