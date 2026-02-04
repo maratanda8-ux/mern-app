@@ -16,6 +16,9 @@ function App() {
         <Route path="/login" element={authUser ? <Navigate to="/" /> : <Login />} />
         <Route path="/signup" element={authUser ? <Navigate to="/" /> : <Signup />} />
       </Routes>
+      <footer className="w-full border-t border-theme-border bg-theme-bg/80 backdrop-blur-md text-center py-3 text-sm text-theme-text-dim">
+        Created by Aditya(maratanda8-ux) 😤
+      </footer>
       <Toaster />
     </div>
   );
