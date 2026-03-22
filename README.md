@@ -19,3 +19,5 @@ A full-stack Note Taking application built with the MERN stack (MongoDB, Express
 - **Database**: MongoDB
 - **Authentication**: JWT (JSON Web Tokens)
 
+Visit app: https://notary-8lhf.onrender.com
+
